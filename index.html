@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Coração com Olhos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="heart-container">
+    <div class="heart"></div>
+    <div class="eyes">
+      <div class="eye">
+        <div class="pupil"></div>
+      </div>
+      <div class="eye">
+        <div class="pupil"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <h2>EU TE AMO LETICIA</h2>
+      <h3>Como Van Gogh viu o amor</h3>
+    <p>“Eu sonho com pintar o mundo,
+mas meu coração pinta você em cada cor.”
+
+Entre girassóis e estrelas,
+teu amor é a luz que me guia,
+como a noite brilhante de Arles,
+que aquece a alma vazia.
+
+“Não perca o fogo dentro de você,”
+e é teu abraço que inflama,
+a esperança que nunca morre,
+a chama que não se apaga.
+
+No turbilhão das cores e sombras,
+teu sorriso é a pincelada perfeita,
+um quadro vivo de paixão e calma,
+onde encontro a vida perfeita.
+
+“Amar é saber encontrar luz nas trevas,”
+e contigo, mesmo a dor tem beleza,
+porque o amor, como Van Gogh sabia,
+é a arte que cura, é a nossa poesia.</p>
+  </div>
+
+   <div class="carousel">
+    <div class="slides" id="slideContainer1">
+      <div class="slide"><img src="1.jpg.JPG" alt="Imagem 1"></div>
+      <div class="slide"><img src="2.jpg.JPG" alt="Imagem 2"></div>
+      <div class="slide"><img src="3.jpg.JPG" alt="Imagem 3"></div>
+      <div class="slide"><img src="4.jpg.JPG" alt="Imagem 4"></div>
+      <div class="slide"><img src="5.jpg.JPG" alt="Imagem 5"></div>
+      <div class="slide"><img src="6.JPG" alt="Imagem 6"></div>
+      <div class="slide"><img src="8.JPG" alt="Imagem 8"></div>
+      <div class="slide"><img src="9.JPG" alt="Imagem 9"></div>
+      <div class="slide"><img src="10.JPG" alt="Imagem 10"></div>
+      <div class="slide"><img src="11.JPG" alt="Imagem 11"></div>
+      <div class="slide"><img src="12.JPG" alt="Imagem 12"></div>
+      <div class="slide"><img src="13.JPG" alt="Imagem 13"></div>
+
+      
+     
+    </div>
+    <div class="buttons">
+      <button onclick="voltar(1)">&#10094;</button>
+      <button onclick="avancar(1)">&#10095;</button>
+    </div>
+  </div>
+
+  <div class="falling-hearts"></div>
+  
+
+  <script>
+      // Olhos seguem o cursor
+  const pupils = document.querySelectorAll(".pupil");
+
+  document.addEventListener("mousemove", (e) => {
+    pupils.forEach((pupil) => {
+      const rect = pupil.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+      const x = Math.cos(angle) * 8;
+      const y = Math.sin(angle) * 8;
+      pupil.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  });
+
+  // Corações caindo
+  const heartContainer = document.querySelector(".falling-hearts");
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-float");
+    heart.textContent = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000); // remove após a queda
+  }
+
+  setInterval(createHeart, 300); // cria um coração a cada 300ms
+
+
+    const slideData = {};
+
+    for (let i = 1; i <= 5; i++) {
+      const container = document.getElementById('slideContainer' + i);
+      slideData[i] = {
+        container: container,
+        total: container.children.length,
+        index: 0
+      };
+    }
+
+    function atualizarSlide(n) {
+      const data = slideData[n];
+      data.container.style.transform = `translateX(-${data.index * 100}%)`;
+    }
+
+    function avancar(n) {
+      const data = slideData[n];
+      data.index = (data.index + 1) % data.total;
+      atualizarSlide(n);
+    }
+
+    function voltar(n) {
+      const data = slideData[n];
+      data.index = (data.index - 1 + data.total) % data.total;
+      atualizarSlide(n);
+    }
+  </script>
+</body>
+</html>
